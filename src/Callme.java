@@ -4,7 +4,7 @@ import jdk.nashorn.internal.codegen.CompilerConstants;
  * Created by medvedomg on 02.02.16.
  */
 public class Callme {
-    synchronized void call(String msg) {
+    void call(String msg) {
         System.out.print("[" + msg);
         try {
             Thread.sleep(1000);
@@ -28,7 +28,10 @@ class Caller implements Runnable {
     }
 
     public void run() {
-        target.call(msg);
+        synchronized (target) {
+            target.call(msg);
+        }
+
 
     }
 
